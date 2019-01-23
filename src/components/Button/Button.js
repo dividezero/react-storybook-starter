@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './style.css';
+import './Button.css';
 
 // Some crazy utility making for simpler if statements
 const _if = (conditional, ifTrue, ifFalse = '') =>

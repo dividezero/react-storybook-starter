@@ -2,7 +2,7 @@
 import React from 'react';
 import { storiesOf, action, withInfo } from '../../../.storybook/stories';
 
-import Button from '.';
+import Button from './Button';
 
 storiesOf('Button', module)
   .addDecorator((story, context) =>
