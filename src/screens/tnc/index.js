@@ -14,7 +14,8 @@ class Tnc extends Component {
   }
 
   submit = () => {
-
+    const { postMessage } = window.webkit.messageHandlers.callbackHandler;
+    postMessage('do you see me ernest chiu?')
   };
 
   toggleChecked = () => {
