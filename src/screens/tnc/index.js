@@ -15,10 +15,6 @@ class Tnc extends Component {
     }
   }
 
-  componentDidMount() {
-    console.log(this.props.appInfo)
-  }
-
   submit = async () => {
     const { email, isChecked } = this.state;
     const { appInfo: { appId, consentId } } = this.props;
@@ -29,13 +25,20 @@ class Tnc extends Component {
       timestamp: new Date().getTime(),
       userInfo: { email },
       LN: { terms: LN, privacy: LN },
-      PS: { form: 'Agree to Datum Terms and Conditions', authenticated: true },
+      PS: { form: 'Agree to Datum Terms and Conditions', authenticated: "true" },
       SC: { emailMarketing: isChecked }
     };
 
     const request = await createConsent(payload);
-    if (request.code === 200) {
-      return window.webkit.messageHandlers.callbackHandler.postMessage("true");
+    if (request.status === "success") {
+      const reply = JSON.stringify({
+        message: request.message,
+        status: request.status,
+        data: {
+          consentId: request.data.consentId
+        }
+      });
+      window.webkit.messageHandlers.callbackHandler.postMessage(reply);
     }
   };
 

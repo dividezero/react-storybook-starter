@@ -10,8 +10,8 @@ class Home extends Component {
 
   componentWillMount() {
     const { match: { params }, load } = this.props;
-    const consent = typeof params.consentId === 'undefined' ? uuid() : params.consentId;
-
+    const consent = typeof params.consentId === 'undefined' ? uuid().replace(/-/g, '') : params.consentId;
+    console.log(consent);
     load(params.appId, consent)
   }
 
