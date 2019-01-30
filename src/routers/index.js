@@ -7,8 +7,8 @@ import Tnc from '../screens/tnc';
 const AppRouter = () => (
   <Router>
     <Fragment>
-      <Route path='/' exact component={Home} />
-      <Route path='/tnc' exact component={Tnc} />
+      <Route path='/appId=:appId?/consentId=:consentId?' exact component={Home} />
+      <Route path='/tnc' component={Tnc} />
     </Fragment>
   </Router>
 );

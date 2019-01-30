@@ -1,13 +1,23 @@
 import React, { Component }  from 'react';
+import { connect } from 'react-redux';
+import uuid from 'uuid/v4'
 import PropTypes from 'prop-types';
 import Screen from '../../container/screen';
+import { load } from '../../redux/actions/appInfo';
 import './style.css';
 
 class Home extends Component {
 
+  componentWillMount() {
+    const { match: { params }, load } = this.props;
+    const consent = typeof params.consentId === 'undefined' ? uuid().replace(/-/g, '') : params.consentId;
+    console.log(consent);
+    load(params.appId, consent)
+  }
+
   toTnc = () => {
     const { history } = this.props;
-    return history.push('./tnc');
+    return history.push('/tnc');
   };
 
   render() {
@@ -39,4 +49,12 @@ Home.propTypes = {
   })
 };
 
-export default Home;
+const mapStateToProps = state => ({
+  appInfo: state.appInfo
+});
+
+const mapDispatchToProps = dispatch => ({
+  load: (appId, consentId) => dispatch(load(appId, consentId))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

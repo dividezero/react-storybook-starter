@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './style.css';
+import { connect } from 'react-redux';
 import Screen from '../../container/screen';
+import { createConsent } from '../../services/api';
 
 class Tnc extends Component {
   constructor(props) {
@@ -13,8 +15,31 @@ class Tnc extends Component {
     }
   }
 
-  submit = () => {
-    window.webkit.messageHandlers.callbackHandler.postMessage("true");
+  submit = async () => {
+    const { email, isChecked } = this.state;
+    const { appInfo: { appId, consentId } } = this.props;
+    const LN = 'https://datum.org/terms/';
+    const payload = {
+      appId,
+      consentId,
+      timestamp: new Date().getTime(),
+      userInfo: { email },
+      LN: { terms: LN, privacy: LN },
+      PS: { form: 'Agree to Datum Terms and Conditions', authenticated: "true" },
+      SC: { emailMarketing: isChecked }
+    };
+
+    const request = await createConsent(payload);
+    if (request.status === "success") {
+      const reply = JSON.stringify({
+        message: request.message,
+        status: request.status,
+        data: {
+          consentId: request.data.consentId
+        }
+      });
+      window.webkit.messageHandlers.callbackHandler.postMessage(reply);
+    }
   };
 
   toggleChecked = () => {
@@ -54,7 +79,7 @@ class Tnc extends Component {
                 </div>
                 <div className="contentContainer">
                   <p className="tncText">By submitting your email, you agree that we may send you emails from our partners about upcoming services and promotions. You may un subscribe at any time.</p>
-                  <p className="tncText">Learn more about our <u><b>Privacy Policy</b></u> and <u><b>Terms & Conditions</b></u></p>
+                  <p className="tncText">Learn more about our <u><b><a href="https://datum.org/terms/">Privacy Policy</a></b></u> and <u><b><a href="https://datum.org/terms/">Terms & Conditions</a></b></u></p>
                 </div>
               </div>
             </div>
@@ -70,4 +95,8 @@ class Tnc extends Component {
   }
 }
 
-export default Tnc;
+const mapStateToProps = state => ({
+  appInfo: state.appInfo
+});
+
+export default connect(mapStateToProps)(Tnc);
