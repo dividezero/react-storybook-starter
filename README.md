@@ -1,6 +1,15 @@
-# Datum Consent Form
+# React Starter with ESlint, Prettier, Husky and Storybook
 
-Webapp for mobile app data sharing consent
+Basically what it says on the box
+
+-[x] React
+-[x] Storybook
+-[x] eslint
+-[x] prettier configs
+-[x] husky precommit linting
+-[x] netlify single pager config
+-[ ] dockerfile
+
 
 ## Getting Started
 
