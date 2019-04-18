@@ -1,8 +1,7 @@
 import { LOAD_REQUEST } from '../../constants/appInfo';
 
 const initialState = {
-  appId: undefined,
-  consentId: undefined
+  id: undefined,
 };
 
 export default function appInfoReducer(state = initialState, action) {
@@ -12,8 +11,7 @@ export default function appInfoReducer(state = initialState, action) {
     case LOAD_REQUEST:
       return {
         ...state,
-        appId: payload.appId,
-        consentId: payload.consentId
+        id: payload.id,
       };
     default:
       return state;

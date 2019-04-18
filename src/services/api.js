@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://marketplace-backend.datum.org/api/developer/v1/consent';
+const BASE_URL = 'https://hazlanrozaimi.com';
 
-const createConsent = data => axios.put(BASE_URL, data).then(res => res.data);
+const getContent = data => axios.get(BASE_URL, data).then(res => res.data);
 
-export { createConsent }
+export { getContent }
